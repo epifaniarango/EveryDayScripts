@@ -1,0 +1,26 @@
+# HTCondor submit file for Snakemake using a Docker container
+
+universe = container
+container_image = file:///staging/arangoisaza/containers/admixture.sif
+
+executable = run_admixture_independent.sh
+arguments = $(K) $(RUN)
+
+log    = log/admixture_$(Cluster)_$(Process).log
+output = log/admixture_$(Cluster)_$(Process).out
+error  = log/admixture_$(Cluster)_$(Process).err
+
+request_cpus = 16
+request_memory = 15GB
+request_disk = 10GB
+
+
+should_transfer_files = YES
+transfer_input_files = /home/arangoisaza/Leticia/1.ADMIXTURE/run_admixture_independent.sh , /home/arangoisaza/Leticia/1.ADMIXTURE/Data4ADMIXTUREpruned.bed, /home/arangoisaza/Leticia/1.ADMIXTURE/Data4ADMIXTUREpruned.bim, /home/arangoisaza/Leticia/1.ADMIXTURE/Data4ADMIXTUREpruned.fam
+#when_to_trasnfer_output = ON_EXIT
+
+# Generate with this shell command:
+# for k in {2..10}; do for r in {0..10}; do echo "$k $r"; done; done > admixture_jobs.txt
+
+# Read from file
+queue K, RUN from admixture_jobs.txt
