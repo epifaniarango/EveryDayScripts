@@ -27,6 +27,12 @@ for f in log.*.out; do
     echo "$k $r $cv"
 done > CV.txt
 
-grep -H '^Loglikelihood:' log.*.out | awk -F'[_.:]' '{print $3 "." $4, $NF}' > Loglikelihood.txt
+for f in log.*.out; do
+    k=$(echo "$f" | sed -n 's/.*_K\([0-9]*\)\.RUN\([0-9]*\)\.out/\1/p')
+    r=$(echo "$f" | sed -n 's/.*_K\([0-9]*\)\.RUN\([0-9]*\)\.out/\2/p')
+    ll=$(grep '^Loglikelihood:' "$f" | awk '{print $2}')
+    echo "$k $r $ll"
+done > Loglikelihood.txt
+
 ```
 
