@@ -18,5 +18,9 @@ Now I transfer to my local machine, as Pong needs to be used locally.
 
 ```
 scp your_user@ap2001.chtc.wisc.edu:/home/arangoisaza/Leticia/1.ADMIXTURE/output_admixture.zip  ./
+unzip output_admixture.zip
+cd ouput
+grep -H CV log.*.out | awk -F'[_.:]' '{print $3 "." $4, $NF}' > CV.txt
+grep -H '^Loglikelihood:' log.*.out | awk -F'[_.:]' '{print $3 "." $4, $NF}' > Loglikelihood.txt
 ```
 
