@@ -36,10 +36,11 @@ done > Loglikelihood.txt
 
 
 
-for i in Data4ADMIXTUREpruned_K*.Run*.Q; do
+for i in DataPruned_K*.Run*.Q; do
     k=$(echo "$i" | sed -n 's/.*_K\([0-9]*\)\.Run[0-9]*\.Q/\1/p')
-    prefix=${i%.Q}
-    echo -e "$prefix\t$k\t$(pwd)/$i"
+    r=$(echo "$i" | sed -n 's/.*\.Run\([0-9]*\)\.Q/\1/p')
+    newname="k${k}r${r}"
+    echo -e "${newname}\t${k}\t$(pwd)/$i"
 done > pong_filemap
 ```
 
