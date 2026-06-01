@@ -1,0 +1,26 @@
+Bootstrap: docker
+From: continuumio/miniconda3:latest
+
+%post
+    # Use conda to set channels
+    conda config --add channels defaults
+    conda config --add channels bioconda
+    conda config --add channels conda-forge
+    conda config --set channel_priority strict
+
+    # Install mamba first
+    conda install -y -c conda-forge mamba
+
+    # Now use mamba for fast install
+    mamba install bioconda::plink
+    mamba install bioconda::bcftools
+
+%environment
+    export PATH=/opt/conda/bin:$PATH
+
+%labels
+    Author Epifanía Arango
+    Description "Singularity container with plink and bcftools from Bioconda"
+
+%help
+    Includes plink installed via Conda/Mamba.
