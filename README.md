@@ -79,5 +79,6 @@ On the terminal:
 ```
 pong --filemap pong_filemap -i ind2pop.txt -n order_pops.txt
 ```
+Here you can also inclue a list of colors to match your asthetics. 
 
 
