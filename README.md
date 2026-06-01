@@ -15,7 +15,6 @@ Now you can trasnger the files data.bed, data.bim and data.fam to your local mac
 
 ```
 plink --bfile data --allow-no-sex --pca 10 --out pca
-
 ```
 I attach here my Rscript for plotting:
 ```
