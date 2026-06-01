@@ -1,5 +1,5 @@
 # ADMIXTURE
-For this script your already need the pruned data! The prunning setup is on the PCA branch. You also have available here the definition file to create the container. 
+For this script your already need the pruned data! The prunning setup is on the [PCA branch](https://github.com/epifaniarango/EveryDayScripts/tree/PCA). You also have available here the definition file to create the container. 
 ```
 condor_submit admixture.sub
 ```
