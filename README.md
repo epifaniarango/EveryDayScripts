@@ -11,71 +11,50 @@ Once this runs
 ```
 condor_submit 2.MergePlink.sub
 ```
-Now I transfer to my local machine, as Pong needs to be used locally. 
+Now you can trasnger the files data.bed, data.bim and data.fam to your local machine, run PCA and plot it. 
 
 ```
-scp your_user@ap2001.chtc.wisc.edu:/home/arangoisaza/Leticia/1.ADMIXTURE/output_admixture.zip  ./
-unzip output_admixture.zip
-cd ouput
-for f in log.*.out; do
-    k=$(echo "$f" | sed -n 's/.*_K\([0-9]*\)\.RUN\([0-9]*\)\.out/\1/p')
-    r=$(echo "$f" | sed -n 's/.*_K\([0-9]*\)\.RUN\([0-9]*\)\.out/\2/p')
-    cv=$(grep "CV error" "$f" | awk '{print $NF}')
-    echo "$k $r $cv"
-done > CV.txt
+plink --bfile data --allow-no-sex --pca 10 --out pca
 
-for f in log.*.out; do
-    k=$(echo "$f" | sed -n 's/.*_K\([0-9]*\)\.RUN\([0-9]*\)\.out/\1/p')
-    r=$(echo "$f" | sed -n 's/.*_K\([0-9]*\)\.RUN\([0-9]*\)\.out/\2/p')
-    ll=$(grep '^Loglikelihood:' "$f" | awk '{print $2}')
-    echo "$k $r $ll"
-done > Loglikelihood.txt
-
-
-
-for i in DataPruned_K*.Run*.Q; do
-    k=$(echo "$i" | sed -n 's/.*_K\([0-9]*\)\.Run[0-9]*\.Q/\1/p')
-    r=$(echo "$i" | sed -n 's/.*\.Run\([0-9]*\)\.Q/\1/p')
-    newname="k${k}r${r}"
-    echo -e "${newname}\t${k}\t$(pwd)/$i"
-done > pong_filemap
 ```
-
-Rscript:
+I attach here my Rscript for plotting:
 ```
-#Create files por population labels and order of pops
-
-setwd("/Users/ragsdalelab/Documents/Leticia/Analysis/1.ADMIXTURE/")
-
-fam=read.table("Data4ADMIXTURE.fam", header = F)
-
-
-
-write.table(fam$V1, "ind2pop.txt", row.names = F,col.names = F, quote = F)
-            
-order=unique(fam$V1)
-write.table(order,"order_pops.txt", row.names = F,col.names = F, quote = F)
-
-#then modify manually your desired order
-
+setwd("your_directory")
 library(data.table)
-library(ggplot2)
-            
-cv =fread("output/CV.txt", col.names = c("K", "Run", "cv_error"))
-cv_plot <- ggplot(cv, aes(group=K, x=K, y=cv_error)) + 
-geom_boxplot() +
- theme(legend.position="none") +
- labs(x="K", y="Cross-validation error",
-  caption = paste("min CV-error =", cv[which(cv$cv_error == min(cv$cv_error)),]$cv_error, "in K =", cv[which(cv$cv_error == min(cv$cv_error)),]$K)) +
- scale_x_continuous("K", labels = as.character(min(cv$K):max(cv$K)), breaks = min(cv$K):max(cv$K))+
- ggtitle("Cross Validation Error - Autosomes")+
- theme_classic() 
- cv_plot
- ggsave(plot = cv_plot, filename = "CV_error.pdf", width = 10, height = 4)
+library(RColorBrewer)
+library(tidyverse)
+
+
+PCA <- read_table2("pca.eigenvec", col_names = FALSE)
+names(PCA)[2] <- "ind"
+names(PCA)[1] <- "populations"
+names(PCA)[3:ncol(PCA)] <- paste0("PC", 1:(ncol(PCA)-2))
+
+eigenval <- scan("pca.eigenval")
+
+pve <- data.frame(PC = 1:10, pve = eigenval/sum(eigenval)*100)
+#I paste the vvalues manually to ggplot for each PC
+
+pve
+
+#this is the order you want or your popualtions to appear in the legedn of the plot
+f = factor(c("Yoruba","French","Han","Quechua","Karitiana","Surui","Huilliche-Chiloe","Lafkenche","Pehuenche"))
+
+PCA1=PCA[order(match(PCA$populations, f)),]
+PCA$populations <- factor(PCA$populations, levels = c(f))
+
+PCA1$populations<- factor(PCA1$populations, levels = f)
+
+
+
+aa=ggplot(PCA1, aes(PC1,PC2, color=populations))+
+  geom_point() +
+  theme_classic() +
+  xlab("PC1 (21.48%)") + ylab("PC2 (10.06%)")+
+  scale_colour_manual(name = "Population", labels = f,values =c("#E78AC3","#FC8D62","#8DA0CB","#A6D854","#B3B3B3","purple","#66C2A5","#FFD92F","#E5C494")) 
+
+
+aa
 ```
 
-On the terminal:
-```
-pong --filemap pong_filemap -i ind2pop.txt -n order_pops.txt
-```
 
