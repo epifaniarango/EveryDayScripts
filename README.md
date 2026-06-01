@@ -1,1 +1,4 @@
 # SIMPLE EVERYDAY SCRIPTS
+For the moment:
+- PCA
+- ADMIXTURE
