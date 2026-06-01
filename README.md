@@ -1,10 +1,13 @@
 # ADMIXTURE
-For this script your already need the pruned data! The prunning setup is on the [PCA branch](https://github.com/epifaniarango/EveryDayScripts/tree/PCA). You also have available here the definition file to create the container. 
+For this script your already need the pruned data! The prunning setup is on the [PCA branch](https://github.com/epifaniarango/EveryDayScripts/tree/PCA). You also have available here the definition file to create the container. To select how many Ks and RUNs, run this script in your terminal. 
+```
+for k in {2..10}; do for r in {0..10}; do echo "$k $r"; done; done > admixture_jobs.txt
+```
+Be awere that you need to modify BOTH the file admixture.sub and admixture_independet_jobs.sh with the name off your plink files before running the script.
 ```
 condor_submit admixture.sub
 ```
-
-
+Once it is over you can trasnfer the output files locally eithr with scp or globus. PONG can only be used locally and you can install it with conda.
 ```
 mkdir output
 mv *.Q output/
@@ -12,7 +15,6 @@ mv *.P output/
 mv log.* output/
 zip -r output_admixture.zip output/
 ```
-Now I transfer to my local machine, as Pong needs to be used locally. 
 
 ```
 scp your_user@ap2001.chtc.wisc.edu:/home/arangoisaza/Leticia/1.ADMIXTURE/output_admixture.zip  ./
