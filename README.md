@@ -2,16 +2,12 @@
 I use this script when handling Whole-Genome data which is big and hard to handle locally. Here, I assume my big VCF files (by chromosome) are in the cluster and later I will be able to have a single pruned plink file that is more manageable to work locally. 
 
 ```
-condor_submit admixture.sub
+condor_submit 1.VCFtoPLINK.sub
 ```
-
+Once this runs
 
 ```
-mkdir output
-mv *.Q output/
-mv *.P output/
-mv log.* output/
-zip -r output_admixture.zip output/
+condor_submit 2.MergePlink.sub
 ```
 Now I transfer to my local machine, as Pong needs to be used locally. 
 
