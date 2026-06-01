@@ -1,4 +1,4 @@
 # SIMPLE EVERYDAY SCRIPTS
 For the moment:
-- PCA
-- ADMIXTURE
+- [PCA](https://github.com/epifaniarango/EveryDayScripts/tree/PCA)
+- [ADMIXTURE](https://github.com/epifaniarango/EveryDayScripts/tree/ADMIXTURE)
