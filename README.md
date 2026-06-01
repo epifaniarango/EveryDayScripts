@@ -1,5 +1,5 @@
 # ADMIXTURE
-
+For this script your already need the pruned data! The prunning setup is on the PCA branch.
 ```
 condor_submit admixture.sub
 ```
