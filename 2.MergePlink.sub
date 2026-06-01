@@ -1,5 +1,5 @@
 universe = container
-container_image = osdf:///chtc/staging/arangoisaza/containers/plink.sif
+container_image = osdf:///chtc/staging/arangoisaza/containers/plink_bcftools.sif
 
 #executable = run_pca.sh
 executable = merge_plink_files.sh
