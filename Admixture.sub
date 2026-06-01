@@ -1,5 +1,3 @@
-# HTCondor submit file for Snakemake using a Docker container
-
 universe = container
 container_image = file:///staging/arangoisaza/containers/admixture.sif
 
