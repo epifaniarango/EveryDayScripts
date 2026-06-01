@@ -1,0 +1,29 @@
+universe = container
+container_image = osdf:///chtc/staging/arangoisaza/containers/plink_bcftools.sif
+
+executable = run_VCFtoPLINK.sh
+arguments = $(CHR)
+
+
+
+
+transfer_input_files = \
+  osdf:///chtc/staging/arangoisaza/RawChileVCF2/raw_merge_chr$(CHR).vcf.gz  , \
+  osdf:///chtc/staging/arangoisaza/RawChileVCF2/raw_merge_chr$(CHR).vcf.gz.tbi
+
+
+output = log/1.Prepare4PCA_$(Cluster)_$(Process).out
+error  = log/1.Prepare4PCA_$(Cluster)_$(Process).err
+log    = log/1.Prepare4PCA_$(Cluster)_$(Process).log
+
+request_cpus   = 4
+request_memory = 15GB
+request_disk   = 15GB
+
+
+
+transfer_output_files = \
+  chr$(CHR).bed, \
+  chr$(CHR).bim, \
+  chr$(CHR).fam, \
+
