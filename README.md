@@ -55,6 +55,29 @@ aa=ggplot(PCA1, aes(PC1,PC2, color=populations))+
 
 
 aa
+
+
+#If you also want to include shapes, you can do it like this:
+
+
+
+aa=ggplot(pca1, aes(PC1,PC2, color=populations, shape=populations))+
+  geom_point(size=5,alpha=0.9) +
+  theme_classic() +
+  xlab("PC1 (21.48%)") + ylab("PC2 (10.06%")+
+  scale_colour_manual(name = "Population", labels = f,values =c("#FC8D62","#8DA0CB","#A6D854","#36454F","purple","#66C2A5","#FFD92F","#E5C494")) +
+  scale_shape_manual(name = "Population", labels = f,values =c(19,19,19,8,1,16,1,19)) +
+  theme(
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.text = element_text(size = 12),
+    legend.title = element_text(size = 14, face = "bold"),
+    legend.text = element_text(size = 12)
+  )
+
+
+
+aa
+
 ```
 
 
