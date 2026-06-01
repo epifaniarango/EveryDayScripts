@@ -1,5 +1,5 @@
 # PCA
-I use this script when handling Whole-Genome data which is big and hard to handle locally. Here, I assume my big VCF files (by chromosome) are in the cluster and later I will be able to have a single pruned plink file that is more manageable to work locally. 
+I use this script when handling Whole-Genome data which is big and hard to handle locally. Here, I assume my big VCF files (by chromosome) are in the cluster and later I will be able to have a single pruned plink file that is more manageable to work locally. Here you also have available the definition file to buils your container.
 
 On this script I pruned with this parameters (50 5 0.4) which work good for whole-genome data, you can include here or in the later steps any filter you want (HWE, MAF, etc...)
 
