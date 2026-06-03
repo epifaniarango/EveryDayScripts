@@ -12,7 +12,7 @@ From: continuumio/miniconda3:latest
     conda install -y -c conda-forge mamba
 
     # Now use mamba for fast install
-    mamba install -y python=3.10 snakemake admixture
+    mamba install bioconda::admixture
 
 %environment
     export PATH=/opt/conda/bin:$PATH
