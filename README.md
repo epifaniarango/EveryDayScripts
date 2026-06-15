@@ -1,4 +1,2 @@
-# SIMPLE EVERYDAY SCRIPTS
-For the moment:
-- [PCA](https://github.com/epifaniarango/EveryDayScripts/tree/PCA)
-- [ADMIXTURE](https://github.com/epifaniarango/EveryDayScripts/tree/ADMIXTURE)
+# NJ tree of inverted f3-outgroup statistic
+This analaysis is very usefull as guide for further demographic modelling. I start with my data in plink(1.9) format and the new Admixtools2 R pacakage. For the example here, I use Yoruba as common outgroup and calculated all the possible f3-outgroup combinations. f3(Yoruba, X,Y), being X and Y all the possible combination of the populations on your dataset. Everything can be done using the R script.
